@@ -21,6 +21,7 @@ public:
     int calcularNescalas();
     void adicionarPassageiros(Passageiro *passageiro);
     void removerPasasgeiro(Passageiro *Pasasgeiro);
+    
    // Getters
     Aeronave* getAeronave() const { return aeronave; }
     Piloto* getPiloto() const { return piloto; }
@@ -51,4 +52,4 @@ public:
 
 };
 
-#endif;
+#endif

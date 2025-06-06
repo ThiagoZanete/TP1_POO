@@ -10,6 +10,7 @@ class Piloto : public Pessoa{
     string matricula;
 public:
     Piloto(string nome, string matricula, string breve, string horasDeVoo);
+   
 };
 
-#endif;
+#endif

@@ -12,4 +12,4 @@ public:
     void setNome(string nome) {nome = nome; }; 
 };
 
-#endif;
+#endif

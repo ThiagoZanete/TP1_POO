@@ -5,7 +5,7 @@ using namespace std;
 
 class Base{
 public:
-    void exibirDados();
-    string serializar();
+    virtual void exibirDados();
+    virtual string serializar();
 };
-#endif;
+#endif

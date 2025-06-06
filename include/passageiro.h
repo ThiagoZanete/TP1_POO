@@ -10,6 +10,8 @@ class Passageiro : public Pessoa{
     string cpf;
 public:
     Passageiro(string nome, string bilhete, string cpf);
+  
+    
 
 };
-#endif;
+#endif
