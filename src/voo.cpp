@@ -1,16 +1,19 @@
 #include "voo.h"
 
-Voo :: Voo(string codigo, string origem, string destino, Aeronave *aeronave, Piloto *piloto, Piloto *copiloto):
-    codigo(codigo),origem(origem), destino(destino), aeronave(aeronave), piloto(piloto), copiloto(piloto){}
+Voo::Voo(string codigo, string origem, string destino, Aeronave *aeronave, Piloto *piloto, Piloto *copiloto)
+    : aeronave(aeronave), piloto(piloto), copiloto(copiloto),
+      duracaoEstimada(0), nEscalas(0),
+      codigo(codigo), dataHoraChegada(""), dataHoraSaida(""),
+      destino(destino), distancia(""), origem(origem) {}
+
 
 void Voo :: adicionarPassageiros(Passageiro *p){
-    cout<<"Aqui";
     if(passageiros.size() < (unsigned)aeronave->getCapacidade()){
         passageiros.push_back(p);
-        cout<<"Adicionou";
+        cout<<"Adicionou: "<< p->getNome() << endl;
     }
     else
-        cout<<"Voo está cheio";
+        cout<<"O voo de " << origem << " para " << destino << " está cheio."<<endl;
 }
 
 void Voo :: removerPassageiro(Passageiro *p){

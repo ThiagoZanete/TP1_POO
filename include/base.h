@@ -7,5 +7,7 @@ class Base{
 public:
     virtual void exibirDados();
     virtual string serializar();
+    virtual string getcodigo();
+    virtual string getnome();
 };
 #endif

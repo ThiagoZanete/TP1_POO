@@ -14,6 +14,8 @@ string Aeronave::serializar(){
 void Aeronave::exibirDados(){
     cout << "Codigo: " << codigo << "\nModelo: " << modelo << "\nCapacidade: " << capacidade << "\nVelocidade Media: " << velocidadeMedia << "\nHoras de Autonomia: " << horasDeAutonomia <<endl;
 }
+
+
 /*
 Aeronave* Aeronave::registerAircraft(string cod, string model, int cap, float velMed, float hAut){
      return new Aeronave(cod, model, cap, velMed, hAut);//cria um aeronave e retorna um ponteiro pra ela

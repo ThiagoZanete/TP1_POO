@@ -4,19 +4,70 @@
 
 int main(){
     int opc;
+    Piloto *auxPiloto, *auxPiloto2;
+    Aeronave *auxAeronave;
     Gerenciador gerenciador;
-    cout << "1 - Cadastrar aereonave"<< endl;
-    cin >> opc;
-    Aeronave *a = new Aeronave("459", "Hurricane", 2, 270, 17);
-    Passageiro *b = new Passageiro("João Voador", "voo12345", "123.456.789-10");
-    Piloto *p = new Piloto("Ze do aviao", "123Ze", "4321", "60");
-    Piloto *c = new Piloto("Joao aviao", "113Ze", "1234", "92");
-    Voo *v = new Voo("11111", "XiqueXique","Ba",a,p,c);
-    v->adicionarPassageiros(b);
+    string auxCod, auxNome, auxNome2, auxBreve, auxMatricula, auxHorasdeVoo, auxBilhete, auxCpf, auxOrigem, auxDestino;
+    int auxCap;
+    float auxVel, auxHorasAutonomia;
     
-    gerenciador.cadastrarObjeto(a);
-    gerenciador.cadastrarObjeto(b);
-    gerenciador.cadastrarObjeto(c);
+    while(true){
+        cout << "\n===================================\n1- Cadastrar aereonave\n2- Cadastrar Piloto\n3- Cadastrar Passageiro\n4- Criar Voo\n5- Cadastrar passageiro em voo\n6- Listar Voos\n7- Listar passageiros de um voo\n8- Gerar relatórios e estatísticas\n9- Salvar dados e sair\n===================================\n\nEscolha uma opção seu gay: "<< endl;
+        cin >> opc;
+        switch (opc){
+        case 1:{//cadastrar aeronave
+            cout << "Digite o código da aeronave, auxNome, auxCapacidade, auxVelocidadeMedia e autonomia: ";
+            cin >> auxCod >> auxNome >> auxCap >> auxVel >> auxHorasAutonomia;
+            Aeronave *novaAeronave = new Aeronave(auxCod, auxNome, auxCap, auxVel, auxHorasAutonomia);
+            gerenciador.cadastrarObjeto(novaAeronave);
+            break;
+        }
+        case 2:{//cadastrar piloto
+            cout << "Digite o auxNome do piloto, brevê, matrícula e as horas de voo: ";
+            cin >> auxNome >> auxBreve >> auxMatricula >> auxHorasdeVoo;
+            Piloto *novoPiloto = new Piloto(auxNome, auxBreve, auxMatricula, auxHorasdeVoo);
+            gerenciador.cadastrarObjeto(novoPiloto);
+            break;
+        }
+        case 3:{//cadastrar passageiro
+            cout << "Digite o auxNome do passageiro, o auxBilhete e o auxCpf: ";
+            cin >> auxNome >> auxBilhete >> auxCpf;
+            Passageiro *novoPassageiro = new Passageiro(auxNome, auxBilhete, auxCpf);
+            gerenciador.cadastrarObjeto(novoPassageiro);
+            break;
+        }
+        case 4:{//criar Voo
+
+            cout << "Digite o nome do piloto e do copiloto designados para o voo"<<endl;
+            cin >> auxNome >> auxNome2;
+            auxPiloto = gerenciador.procurarPiloto(auxNome);
+            auxPiloto2 = gerenciador.procurarPiloto(auxNome2);
+            if(!auxPiloto || !auxPiloto2){
+                cout << "O piloto ou o copiloto ainda não foram cadastrados. Cadastre primeiro para designar ao voo" << endl;
+                break;
+            }
+            
+            cout << "Digite o código ou o auxNome da aeronave designada para o voo: ";
+            cin >> auxCod;
+            auxAeronave = gerenciador.procurarAeronave(auxCod);
+            if(!auxAeronave){
+                cout << "Essa aeronave não está cadastrada ainda. Cadastre primeiro para designar ao voo" << endl;
+                break;
+            }
+
+
+            cout << "Digite o código do voo a origem e o destino" << endl;
+            cin >> auxCod >> auxOrigem >> auxDestino;
+            Voo *novoVoo = new Voo(auxCod, auxOrigem, auxDestino, auxAeronave, auxPiloto, auxPiloto2);
+            gerenciador.cadastrarVoo(novoVoo);
+        break;  
+        }
+        default:
+            cout << "Caso Default"<<endl;
+            break;
+        }
+    }
+   
     gerenciador.listarObjetos();
     return 0;
 }

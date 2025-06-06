@@ -22,7 +22,7 @@ public:
     void adicionarPassageiros(Passageiro *passageiro);
     void removerPassageiro(Passageiro *Passageiro);
     
-   // Gettersp
+   // Getters
     Aeronave* getAeronave() const { return aeronave; }
     Piloto* getPiloto() const { return piloto; }
     Piloto* getCopiloto() const { return copiloto; }

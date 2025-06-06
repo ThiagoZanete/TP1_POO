@@ -9,6 +9,7 @@ class Passageiro : public Pessoa{
     string cpf;
 public:
     Passageiro(string nome, string bilhete, string cpf);
+    virtual ~Passageiro() {};
     string serializar() override;
     void exibirDados() override;
 

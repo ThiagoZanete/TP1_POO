@@ -20,7 +20,7 @@ public:
     string getCodigo() const { return codigo; }
     int getCapacidade() const { return capacidade; }
     float getVelocidade() const { return velocidadeMedia; }
-    float getAeronave() const { return horasDeAutonomia; }
+    float getHorasDeAutonomia() const { return horasDeAutonomia; }
     //setters
     void setModelo(string model) { modelo = model; }
     void setCodigo(string cod) { codigo = cod; }
