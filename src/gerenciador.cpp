@@ -14,5 +14,6 @@ bool Gerenciador::cadastrarObjeto(Base *objeto){
 void Gerenciador::listarObjetos() const{
     for(const auto& obj : objetosCadastrados){
         obj->exibirDados();
+        cout << "====================================="<<endl;
     }
 }        
