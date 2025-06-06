@@ -20,9 +20,9 @@ public:
     float calcularDuracao();
     int calcularNescalas();
     void adicionarPassageiros(Passageiro *passageiro);
-    void removerPasasgeiro(Passageiro *Pasasgeiro);
+    void removerPassageiro(Passageiro *Passageiro);
     
-   // Getters
+   // Gettersp
     Aeronave* getAeronave() const { return aeronave; }
     Piloto* getPiloto() const { return piloto; }
     Piloto* getCopiloto() const { return copiloto; }
