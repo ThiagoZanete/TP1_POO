@@ -21,6 +21,8 @@ public:
     int calcularNescalas();
     void adicionarPassageiros(Passageiro *passageiro);
     void removerPassageiro(Passageiro *Passageiro);
+    string serializar() override;
+    void exibirDados() override;
     
    // Getters
     Aeronave* getAeronave() const { return aeronave; }

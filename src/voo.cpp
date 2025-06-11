@@ -24,3 +24,9 @@ void Voo :: removerPassageiro(Passageiro *p){
         }
     }
 }
+string Voo::serializar(){
+    return "";
+}
+void Voo::exibirDados(){
+    cout << "\nOrigem: " << origem << "\nDestino: " << destino << endl;
+}

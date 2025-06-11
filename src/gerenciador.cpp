@@ -12,41 +12,36 @@ bool Gerenciador::cadastrarObjeto(Base *objeto){
     return false;
 }
 
-Piloto* Gerenciador::procurarPiloto(string pilotoProcurado) {
-    for (const auto& obj : objetosCadastrados) {
-        // Tenta converter para Piloto*
-        Piloto* piloto = dynamic_cast<Piloto*>(obj);
-        if (piloto != nullptr) {
-            if (piloto->getnome() == pilotoProcurado) {
-                return piloto;  // retorna o ponteiro encontrado
-            }
-        }
-    }
-    return nullptr;  // não encontrou
-}
-
-
-Aeronave* Gerenciador::procurarAeronave(string aeronaveProcurada) {
-    for (const auto& obj : objetosCadastrados) {
-        // Tenta converter para Aeronave*
-        Aeronave* aeronave = dynamic_cast<Aeronave*>(obj);
-        if (aeronave != nullptr) {
-            if (aeronave->getCodigo() == aeronaveProcurada) {
-                cout << aeronave->getnome();
-                return aeronave;  // retorna o ponteiro encontrado
-            }
-        }
-    }
-    return nullptr;  // não encontrou
-}
-
-
 void Gerenciador::listarObjetos() const{
     for(const auto& obj : objetosCadastrados){
         obj->exibirDados();
         cout << "====================================="<<endl;
     }
-}        
+}    
+
+Piloto* Gerenciador::procurarPiloto(string nome){
+    for(size_t i = 0; i < objetosCadastrados.size(); i++){
+        if(Piloto *p = dynamic_cast<Piloto*>(objetosCadastrados[i])){
+            cout << "É um piloto"<<endl;
+            if(p->getnome() == nome)
+                return p;
+        }
+    }
+    cout << "Piloto não encontrado"<< endl;
+    return nullptr;
+}
+
+Aeronave* Gerenciador::procurarAeronave(string nome){
+    for(size_t i = 0; i < objetosCadastrados.size(); i++){
+        if(Aeronave *a = dynamic_cast<Aeronave*>(objetosCadastrados[i])){
+            cout << "É uma aeronave"<<endl;
+            if(a->getnome() == nome)
+                return a;
+        }
+    }
+    cout << "Aeronave não encontrada"<< endl;
+    return nullptr;
+}
 
 void Gerenciador::cadastrarVoo(Voo* voo){
     if(voo) voosCadastrados.push_back(voo);
