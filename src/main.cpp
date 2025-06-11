@@ -16,24 +16,25 @@ int main(){
         cin >> opc;
         switch (opc){
         case 1:{//cadastrar aeronave
-            cout << "Digite o código da aeronave, auxNome, auxCapacidade, auxVelocidadeMedia e autonomia: ";
+            cout << "Digite o código da aeronave, Nome, Capacidade, VelocidadeMedia e autonomia: ";
             cin >> auxCod >> auxNome >> auxCap >> auxVel >> auxHorasAutonomia;
             Aeronave *novaAeronave = new Aeronave(auxCod, auxNome, auxCap, auxVel, auxHorasAutonomia);
-            gerenciador.cadastrarObjeto(novaAeronave);
+            gerenciador.cadastrarAeronave(novaAeronave);
+            gerenciador.listarAeronaves();
             break;
         }
         case 2:{//cadastrar piloto
-            cout << "Digite o auxNome do piloto, brevê, matrícula e as horas de voo: ";
+            cout << "Digite o Nome do piloto, brevê, matrícula e as horas de voo: ";
             cin >> auxNome >> auxBreve >> auxMatricula >> auxHorasdeVoo;
             Piloto *novoPiloto = new Piloto(auxNome, auxBreve, auxMatricula, auxHorasdeVoo);
-            gerenciador.cadastrarObjeto(novoPiloto);
+            gerenciador.cadastrarPiloto(novoPiloto);
             break;
         }
         case 3:{//cadastrar passageiro
-            cout << "Digite o auxNome do passageiro, o auxBilhete e o auxCpf: ";
+            cout << "Digite o Nome do passageiro, o auxBilhete e o auxCpf: ";
             cin >> auxNome >> auxBilhete >> auxCpf;
             Passageiro *novoPassageiro = new Passageiro(auxNome, auxBilhete, auxCpf);
-            gerenciador.cadastrarObjeto(novoPassageiro);
+            gerenciador.cadastrarPassageiro(novoPassageiro);
             break;
         }
         case 4:{//criar Voo
@@ -41,30 +42,55 @@ int main(){
             cin >> auxNome >> auxNome2;
             auxPiloto = gerenciador.procurarPiloto(auxNome);
             auxPiloto2 = gerenciador.procurarPiloto(auxNome2);
-            if(auxPiloto && auxPiloto2){
-                cout << "Ambos Pilotos encontrados" << endl;
-            }
+            if(!auxPiloto || !auxPiloto2)
+                break;
             cout << "Digite o nome da aeronave: ";
             cin >> auxNome;
             auxAeronave = gerenciador.procurarAeronave(auxNome);
-            if(auxAeronave){
-                cout << "Aeronave encontrada" << endl;
-            }
+            if(!auxAeronave)
+                break;
             // Agora cria o voo (ponteiros válidos)
             cout << "Digite o código, origem e destino do voo: ";
             cin >> auxCod >> auxOrigem >> auxDestino;
             Voo* novoVoo = new Voo(auxCod, auxOrigem, auxDestino, auxAeronave, auxPiloto, auxPiloto2);
             gerenciador.cadastrarVoo(novoVoo);
-            gerenciador.listarObjetos();
+            //gerenciador.listarObjetos();
+            break;
+        }
+        case 5:{//cadastrar passageiro em voo
+            cout << "Digite o codigo do voo em que deseja cadastrar um passageiro: ";
+            cin >> auxCod; 
+            Voo *voo = gerenciador.procurarVoo(auxCod);
+            if(!voo)//não achou
+                break;
+            cout << "Digite o nome do passageiro que deseja incluir nesse voo: ";
+            cin >> auxNome;
+            Passageiro *passageiro= gerenciador.procurarPassageiro(auxNome);
+            if(!passageiro)//não achou
+                break;
+            gerenciador.cadastrarPassageiroVoo(passageiro, voo);
+            break;
+        }
+        case 6:{//listar voos
+            cout << "Voos cadastrados:"<<endl;
+            gerenciador.listarVoos();
+            break;
+        }
+        case 7:{//listar passageiros de voo
+            cout << "Digite o código do voo que deseja listar os passageiros: ";
+            cin >> auxCod;
+            Voo *voo = gerenciador.procurarVoo(auxCod);
+            if(!voo)//não achou
+                break;
+            gerenciador.listarPassageirosDeUmVoo(voo);
             break;
         }
         default:
             cout << "Caso Default"<<endl;
             break;
         }
-        //break;
     }
    
-    gerenciador.listarObjetos();
+    gerenciador.listarVoos();
     return 0;
 }
