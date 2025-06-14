@@ -1,9 +1,14 @@
 #ifndef GERENCIADOR_H
 #define GERENCIADOR_H
 #include "aeronave.h"
+#include "voo.h"
+#include "piloto.h"
+#include "passageiro.h"
 #include "base.h"
 #include <vector>
 using namespace std;
+
+class Voo;
 
 class Gerenciador{
     vector<Piloto*> pilotosCadastrados;
@@ -30,6 +35,7 @@ public:
     void listarPassageirosDeUmVoo(Voo *v) const;
 
     void salvarDados();
+    void carregarDados();
 };
 
 #endif

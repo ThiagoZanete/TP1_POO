@@ -21,6 +21,23 @@ string Aeronave::serializar(){
     return oss.str();
 }
 
+Aeronave* Aeronave::desserializar(const string& linha) {
+    istringstream ss(linha);
+    string cod, mod, capStr, veloStr, autonomiaStr;
+
+    getline(ss, cod, ',');
+    getline(ss, mod, ',');
+    getline(ss, capStr, ',');
+    getline(ss, veloStr, ',');
+    getline(ss, autonomiaStr, ',');
+
+    int cap = stoi(capStr);
+    float velo = stof(veloStr);
+    float autonomia = stof(autonomiaStr);
+
+    return new Aeronave(cod, mod, cap, velo, autonomia);
+}
+
 void Aeronave::exibirDados(){
     cout << "Codigo: " << codigo << "\nModelo: " << modelo << "\nCapacidade: " << capacidade << "\nVelocidade Media: " << velocidadeMedia << "\nHoras de Autonomia: " << horasDeAutonomia <<endl;
 }

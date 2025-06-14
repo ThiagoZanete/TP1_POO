@@ -11,6 +11,7 @@ public:
     Passageiro(string nome, string bilhete, string cpf);
     virtual ~Passageiro() {};
     string serializar() override;
+    static Passageiro* desserializar(const string& linha);
     void exibirDados() override;
 
     //getters

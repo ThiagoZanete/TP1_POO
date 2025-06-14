@@ -1,7 +1,6 @@
-#include "voo.h"
 #include <vector>
 #include <fstream>
-#include "aeronave.h"
+#include <sstream>
 #include "gerenciador.h"
 using namespace std;
 
@@ -45,18 +44,18 @@ bool Gerenciador::cadastrarPassageiroVoo(Passageiro *p, Voo *v){
     return false;
 }
 
-Piloto* Gerenciador::procurarPiloto(string nome){
+Piloto* Gerenciador::procurarPiloto(string breve){
     for(const auto& p : pilotosCadastrados){
-        if(p->getnome() == nome)
+        if(p->getBreve() == breve)
             return p;
     }
     cout << "Piloto não cadastrado ainda"<<endl;
     return nullptr;
 }
 
-Aeronave* Gerenciador::procurarAeronave(string nome){
+Aeronave* Gerenciador::procurarAeronave(string cod){
     for(const auto& a : aeronavesCadastradas){
-        if(a->getnome() == nome)
+        if(a->getcodigo() == cod)
             return a;
     }
     cout << "Aeronave não cadastrada ainda"<<endl;
@@ -72,9 +71,9 @@ Voo* Gerenciador::procurarVoo(string codigo){
     return nullptr;
 }
 
-Passageiro* Gerenciador::procurarPassageiro(string passageiroProcurado){
+Passageiro* Gerenciador::procurarPassageiro(string cpf){
     for(const auto& p : passageirosCadastrados){
-        if(p->getnome() == passageiroProcurado)
+        if(p->getCpf() == cpf)
             return p;
     }
     cout << "Passageiro não cadastrado ainda"<<endl;
@@ -99,6 +98,64 @@ void Gerenciador::listarAeronaves() const{
 void Gerenciador::listarPassageirosDeUmVoo(Voo *v) const{
     v->listarPassageirosVoo();
     cout << "====================================="<<endl;
+}
+
+void Gerenciador::carregarDados() {
+    // 1. Carregar aeronaves
+    ifstream fa("csv/aeronaves.csv");
+    if (fa.is_open()) {
+        string linha;
+        while (getline(fa, linha)) {
+            Aeronave* a = Aeronave::desserializar(linha);
+            if (a != nullptr) {
+                aeronavesCadastradas.push_back(a);
+            }
+        }
+        fa.close();
+    } else {
+        cerr << "Erro ao abrir aeronaves.csv\n";
+    }
+
+    // 2. Carregar pessoas
+    ifstream fp("csv/pessoas.csv");
+    if (fp.is_open()) {
+        string linha;
+        while (getline(fp, linha)) {
+            istringstream ss(linha);
+            string tipo;
+            getline(ss, tipo, ','); // PILOTO ou PASSAGEIRO
+
+            if (tipo == "PILOTO") {
+                Piloto* p = Piloto::desserializar(linha);
+                if (p != nullptr) {
+                    pilotosCadastrados.push_back(p);
+                }
+            } else if (tipo == "PASSAGEIRO") {
+                Passageiro* ps = Passageiro::desserializar(linha);
+                if (ps != nullptr) {
+                    passageirosCadastrados.push_back(ps);
+                }
+            }
+        }
+        fp.close();
+    } else {
+        cerr << "Erro ao abrir pessoas.csv\n";
+    }
+
+    // 3. Carregar voos
+    ifstream fv("csv/voos.csv");
+    if (fv.is_open()) {
+        string linha;
+        while (getline(fv, linha)) {
+            Voo* v = Voo::desserializar(linha, *this);
+            if (v != nullptr) {
+                voosCadastrados.push_back(v);
+            }
+        }
+        fv.close();
+    } else {
+        cerr << "Erro ao abrir voos.csv\n";
+    }
 }
 
 void Gerenciador::salvarDados() {

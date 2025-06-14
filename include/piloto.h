@@ -12,7 +12,8 @@ public:
     Piloto(string nome, string breve, string matricula, string horasDeVoo);
     string serializar() override;
     void exibirDados() override;
-
+    static Piloto* desserializar(const string& linha);
+     
     //getters
     //string getNome() const { return nome; } essa parte foi herdada de Pessoa
     string getBreve() const {return breve; }

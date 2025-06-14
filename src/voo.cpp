@@ -1,14 +1,14 @@
 #include "voo.h"
 #include <sstream>
 using namespace std;
-Voo::Voo(string codigo, string origem, string destino, string datasaida, string distancia, Aeronave *aeronave, Piloto *piloto, Piloto *copiloto):
+Voo::Voo(string codigo, string origem, string destino,string datachegada, string datasaida, string distancia, int nEscalas, Aeronave *aeronave, Piloto *piloto, Piloto *copiloto):
     codigo(codigo),
     origem(origem),
     destino(destino),
-    dataHoraChegada(""),
+    dataHoraChegada(datachegada),
     dataHoraSaida(datasaida),
     distancia(distancia),
-    nEscalas(0),
+    nEscalas(nEscalas),
     aeronave(aeronave),
     piloto(piloto),
     copiloto(copiloto){}
@@ -28,6 +28,7 @@ void Voo :: removerPassageiro(Passageiro *p){
         if(passageiros[i]==p){
             delete passageiros[i];
             passageiros.erase(passageiros.begin() + i);
+            break;
         }
     }
 }
@@ -83,6 +84,46 @@ string Voo::serializar(){
                 oss << "|";
             };
     return oss.str();
+}
+
+Voo* Voo::desserializar(const string& linha, Gerenciador& g) {
+    istringstream ss(linha);
+    string cod, origem, destino, dataHoraChegada, dataHoraSaida, distancia, nEscalas, codAero, codPiloto, codCopiloto;
+
+    getline(ss, cod, ',');
+    getline(ss, origem, ',');
+    getline(ss, destino, ',');
+    getline(ss, dataHoraChegada, ',');
+    getline(ss, dataHoraSaida, ',');
+    getline(ss, distancia, ',');
+    getline(ss, nEscalas, ',');
+    getline(ss, codAero, ',');
+    getline(ss, codPiloto, ',');
+    getline(ss, codCopiloto, ',');
+    int numEscalas = stoi(nEscalas); // Convertido para int
+    Aeronave* a = g.procurarAeronave(codAero);
+    Piloto *p = g.procurarPiloto(codPiloto);
+    Piloto *ps = g.procurarPiloto(codCopiloto);
+
+    Voo* voo = new Voo(
+        cod, origem, destino, 
+        dataHoraChegada, dataHoraSaida, 
+        distancia, // String
+        numEscalas, // Int
+        a, p, ps
+    );
+
+    // Ler passageiros
+    string listaCPFs;
+    if (getline(ss, listaCPFs)) {
+        istringstream cpfStream(listaCPFs);
+        string cpf;
+        while (getline(cpfStream, cpf, '|')) {
+            Passageiro* passageiro = g.procurarPassageiro(cpf);
+            if (passageiro) voo->adicionarPassageiros(passageiro);
+        }
+    }
+    return voo;
 }
 
 void Voo::exibirDados(){
