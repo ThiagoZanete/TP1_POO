@@ -1,10 +1,17 @@
 #include "voo.h"
-
-Voo::Voo(string codigo, string origem, string destino, Aeronave *aeronave, Piloto *piloto, Piloto *copiloto)
-    : aeronave(aeronave), piloto(piloto), copiloto(copiloto),
-      duracaoEstimada(calcularDuracao()), nEscalas(calcularNescalas()),
-      codigo(codigo), dataHoraChegada(""), dataHoraSaida(""),
-      destino(destino), distancia("1350"), origem(origem) {}
+#include <sstream>
+using namespace std;
+Voo::Voo(string codigo, string origem, string destino, string datasaida, string distancia, Aeronave *aeronave, Piloto *piloto, Piloto *copiloto):
+    codigo(codigo),
+    origem(origem),
+    destino(destino),
+    dataHoraChegada(""),
+    dataHoraSaida(datasaida),
+    distancia(distancia),
+    nEscalas(0),
+    aeronave(aeronave),
+    piloto(piloto),
+    copiloto(copiloto){}
 
 
 void Voo :: adicionarPassageiros(Passageiro *p){
@@ -34,18 +41,18 @@ int Voo::calcularNescalas() {
     int escalas = distanciaKm / autonomiaKm;
     if (distanciaKm > autonomiaKm && distanciaKm > escalas * autonomiaKm)
         escalas++; // uma escala extra se houver sobra
-
     return escalas;
 }
 
 float Voo::calcularDuracao() {
+    nEscalas = calcularNescalas();
     float distanciaKm = stof(distancia);
     float velocidadeKmH = aeronave->getVelocidade();
 
     if (velocidadeKmH <= 0) return 0;
 
     float duracaoBase = distanciaKm / velocidadeKmH;
-    return duracaoBase + calcularNescalas(); // 1h por escala
+    return duracaoBase + nEscalas; // 1h por escala
 }
 
 
@@ -57,7 +64,25 @@ void Voo::listarPassageirosVoo(){
 
 
 string Voo::serializar(){
-    return "";
+    ostringstream oss;
+    oss << codigo << ","
+        << origem << ","
+        << destino << ","
+        << dataHoraChegada << ","
+        << dataHoraSaida << ","
+        << distancia << ","
+        << nEscalas << ","
+        << aeronave->getcodigo() << ","
+        << piloto->getBreve() << ","
+        << copiloto->getBreve() << ",";
+        
+        // Lista de CPFs dos passageiros separados por '|'
+        for (size_t i = 0; i < passageiros.size(); ++i) {
+            oss << passageiros[i]->getCpf();
+            if (i < passageiros.size() - 1)
+                oss << "|";
+            };
+    return oss.str();
 }
 
 void Voo::exibirDados(){

@@ -1,6 +1,8 @@
 #include "aeronave.h"
 #include <iostream>
+#include <sstream>
 #include <vector>
+using namespace std;
 
 Aeronave::Aeronave(string codigo, string modelo, int capacidade, float velocidadeMedia, float horasDeAutonomia) : Base(){
     this->codigo = codigo;
@@ -10,8 +12,15 @@ Aeronave::Aeronave(string codigo, string modelo, int capacidade, float velocidad
     this->horasDeAutonomia = horasDeAutonomia;
 }
 string Aeronave::serializar(){
-    return "";
+    ostringstream oss;
+        oss << codigo << ","
+            << modelo << ","
+            << capacidade << ","
+            << velocidadeMedia << ","
+            << horasDeAutonomia;
+    return oss.str();
 }
+
 void Aeronave::exibirDados(){
     cout << "Codigo: " << codigo << "\nModelo: " << modelo << "\nCapacidade: " << capacidade << "\nVelocidade Media: " << velocidadeMedia << "\nHoras de Autonomia: " << horasDeAutonomia <<endl;
 }

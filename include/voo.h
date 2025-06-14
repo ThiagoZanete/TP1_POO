@@ -8,15 +8,15 @@
 using namespace std;
 
 class Voo : public Base{
+    string codigo, origem, destino, dataHoraChegada, dataHoraSaida, distancia;
+    int nEscalas;
+    float duracaoEstimada;
     Aeronave *aeronave;
     Piloto *piloto, *copiloto;
-    float duracaoEstimada;
-    int nEscalas;
-    string codigo, dataHoraChegada, dataHoraSaida, destino, distancia, origem;
     vector<Passageiro *> passageiros;
 
 public:
-    Voo(string codigo, string origem, string destino, Aeronave *aeronave, Piloto *piloto, Piloto *copiloto);
+    Voo(string codigo, string origem, string destino, string datasaida, string distancia, Aeronave *aeronave, Piloto *piloto, Piloto *copiloto);
     float calcularDuracao();
     int calcularNescalas();
     void adicionarPassageiros(Passageiro *passageiro);

@@ -5,13 +5,14 @@
 using namespace std;
 
 class Aeronave : public Base{
-    float horasDeAutonomia;
-    float velocidadeMedia;
-    int capacidade;
     string codigo;
     string modelo;
+    int capacidade;
+    float velocidadeMedia;
+    float horasDeAutonomia;
+
 public:
-    Aeronave(string codigo, string modelo, int capacidade, float velocidadeMedia, float horasDeAutonomia);
+    Aeronave(string codigo ="", string modelo="", int capacidade=0, float velocidadeMedia=0.0, float horasDeAutonomia=0.0);
     string serializar() override;//indica que esta sobrescerevndo um método da classe base
     void exibirDados() override;
     //Aeronave* registerAircraft(string cod, string model, int cap, float velMed, float hAut);

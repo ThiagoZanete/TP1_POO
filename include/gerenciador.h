@@ -28,6 +28,8 @@ public:
     void listarPassageiros() const;
     void listarPilotos() const;
     void listarPassageirosDeUmVoo(Voo *v) const;
+
+    void salvarDados();
 };
 
 #endif

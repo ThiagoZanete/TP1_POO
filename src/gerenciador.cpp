@@ -1,7 +1,9 @@
 #include "voo.h"
 #include <vector>
+#include <fstream>
 #include "aeronave.h"
 #include "gerenciador.h"
+using namespace std;
 
 bool Gerenciador::cadastrarPiloto(Piloto *p){
     if(p != nullptr){
@@ -99,6 +101,38 @@ void Gerenciador::listarPassageirosDeUmVoo(Voo *v) const{
     cout << "====================================="<<endl;
 }
 
+void Gerenciador::salvarDados() {
+    // 1. Salva aeronaves
+    ofstream fa("csv/aeronaves.csv");
+    if (!fa.is_open()) {
+        cerr << "Erro ao abrir aeronaves.csv\n";
+        return;
+    }
+    for (const auto& a : aeronavesCadastradas) {
+        fa << a->serializar() << '\n';
+    }
 
+    // 2. Salva pessoas (pilotos + passageiros)
+    ofstream fp("csv/pessoas.csv");
+    if (!fp.is_open()) {
+        cerr << "Erro ao abrir pessoas.csv\n";
+        return;
+    }
+    for (const auto& p : pilotosCadastrados) {
+        fp << p->serializar() << '\n';
+    }
+    for (const auto& p : passageirosCadastrados) {
+        fp << p->serializar() << '\n';
+    }
 
+    // 3. Salva voos
+    ofstream fv("csv/voos.csv");
+    if (!fv.is_open()) {
+        cerr << "Erro ao abrir voos.csv\n";
+        return;
+    }
+    for (const auto& v : voosCadastrados) {
+        fv << v->serializar() << '\n';
+    }
+}
 
