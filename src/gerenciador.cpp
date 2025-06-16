@@ -7,14 +7,17 @@ using namespace std;
 bool Gerenciador::cadastrarPiloto(Piloto *p){
     if(p != nullptr){
         pilotosCadastrados.push_back(p);
+        mapaPilotos[p->getBreve()] = p;
         return true;
     }
     return false;
 }
 
+
 bool Gerenciador::cadastrarAeronave(Aeronave *a){
     if(a != nullptr){
         aeronavesCadastradas.push_back(a);
+        mapaAeronaves[a->getcodigo()] = a;
         return true;
     }
     return false;
@@ -23,6 +26,7 @@ bool Gerenciador::cadastrarAeronave(Aeronave *a){
 bool Gerenciador::cadastrarPassageiro(Passageiro *ps){
     if(ps != nullptr){
         passageirosCadastrados.push_back(ps);
+        mapaPassageiros[ps->getCpf()] = ps;
         return true;
     }
     return false;
@@ -45,20 +49,20 @@ bool Gerenciador::cadastrarPassageiroVoo(Passageiro *p, Voo *v){
 }
 
 Piloto* Gerenciador::procurarPiloto(string breve){
-    for(const auto& p : pilotosCadastrados){
-        if(p->getBreve() == breve)
-            return p;
-    }
-    cout << "Piloto não cadastrado ainda"<<endl;
+    auto it = mapaPilotos.find(breve);
+    if (it != mapaPilotos.end())
+        return it->second;
+
+    cout << "Piloto não cadastrado ainda" << endl;
     return nullptr;
 }
 
 Aeronave* Gerenciador::procurarAeronave(string cod){
-    for(const auto& a : aeronavesCadastradas){
-        if(a->getcodigo() == cod)
-            return a;
-    }
-    cout << "Aeronave não cadastrada ainda"<<endl;
+    auto it = mapaAeronaves.find(cod);
+    if (it != mapaAeronaves.end())
+        return it->second;
+
+    cout << "Aeronave não cadastrada ainda" << endl;
     return nullptr;
 }
 
@@ -72,11 +76,11 @@ Voo* Gerenciador::procurarVoo(string codigo){
 }
 
 Passageiro* Gerenciador::procurarPassageiro(string cpf){
-    for(const auto& p : passageirosCadastrados){
-        if(p->getCpf() == cpf)
-            return p;
-    }
-    cout << "Passageiro não cadastrado ainda"<<endl;
+    auto it = mapaPassageiros.find(cpf);
+    if (it != mapaPassageiros.end())
+        return it->second;
+
+    cout << "Passageiro não cadastrado ainda" << endl;
     return nullptr;
 }
 
@@ -95,66 +99,59 @@ void Gerenciador::listarAeronaves() const{
     }
 } 
 
+void Gerenciador::listarPassageiros() const{
+    for(const auto& p : passageirosCadastrados){
+        p->exibirDados();
+        cout << "====================================="<<endl;
+    }
+} 
+
 void Gerenciador::listarPassageirosDeUmVoo(Voo *v) const{
     v->listarPassageirosVoo();
     cout << "====================================="<<endl;
 }
 
 void Gerenciador::carregarDados() {
-    // 1. Carregar aeronaves
-    ifstream fa("csv/aeronaves.csv");
-    if (fa.is_open()) {
-        string linha;
-        while (getline(fa, linha)) {
-            Aeronave* a = Aeronave::desserializar(linha);
-            if (a != nullptr) {
-                aeronavesCadastradas.push_back(a);
-            }
-        }
-        fa.close();
-    } else {
-        cerr << "Erro ao abrir aeronaves.csv\n";
-    }
-
-    // 2. Carregar pessoas
+    // 1. Carregar pessoas PRIMEIRO (pilotos e passageiros)
     ifstream fp("csv/pessoas.csv");
     if (fp.is_open()) {
         string linha;
         while (getline(fp, linha)) {
             istringstream ss(linha);
             string tipo;
-            getline(ss, tipo, ','); // PILOTO ou PASSAGEIRO
+            getline(ss, tipo, ',');
 
             if (tipo == "PILOTO") {
                 Piloto* p = Piloto::desserializar(linha);
-                if (p != nullptr) {
-                    pilotosCadastrados.push_back(p);
-                }
+                if (p) cadastrarPiloto(p);
             } else if (tipo == "PASSAGEIRO") {
                 Passageiro* ps = Passageiro::desserializar(linha);
-                if (ps != nullptr) {
-                    passageirosCadastrados.push_back(ps);
-                }
+                if (ps) cadastrarPassageiro(ps);
             }
         }
         fp.close();
-    } else {
-        cerr << "Erro ao abrir pessoas.csv\n";
     }
 
-    // 3. Carregar voos
+    // 2. Carregar aeronaves DEPOIS das pessoas
+    ifstream fa("csv/aeronaves.csv");
+    if (fa.is_open()) {
+        string linha;
+        while (getline(fa, linha)) {
+            Aeronave* a = Aeronave::desserializar(linha);
+            if (a) cadastrarAeronave(a);
+        }
+        fa.close();
+    }
+
+    // 3. Carregar voos POR ÚLTIMO (dependem de pilotos e aeronaves)
     ifstream fv("csv/voos.csv");
     if (fv.is_open()) {
         string linha;
         while (getline(fv, linha)) {
             Voo* v = Voo::desserializar(linha, *this);
-            if (v != nullptr) {
-                voosCadastrados.push_back(v);
-            }
+            if (v) cadastrarVoo(v);
         }
         fv.close();
-    } else {
-        cerr << "Erro ao abrir voos.csv\n";
     }
 }
 

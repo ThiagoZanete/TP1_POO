@@ -88,7 +88,8 @@ string Voo::serializar(){
 
 Voo* Voo::desserializar(const string& linha, Gerenciador& g) {
     istringstream ss(linha);
-    string cod, origem, destino, dataHoraChegada, dataHoraSaida, distancia, nEscalas, codAero, codPiloto, codCopiloto;
+    string cod, origem, destino, dataHoraChegada, dataHoraSaida, distancia, nEscalasStr;
+    string codAero, codPiloto, codCopiloto, cpfsStr;
 
     getline(ss, cod, ',');
     getline(ss, origem, ',');
@@ -96,38 +97,34 @@ Voo* Voo::desserializar(const string& linha, Gerenciador& g) {
     getline(ss, dataHoraChegada, ',');
     getline(ss, dataHoraSaida, ',');
     getline(ss, distancia, ',');
-    getline(ss, nEscalas, ',');
+    getline(ss, nEscalasStr, ',');
     getline(ss, codAero, ',');
     getline(ss, codPiloto, ',');
     getline(ss, codCopiloto, ',');
-    int numEscalas = stoi(nEscalas); // Convertido para int
+    getline(ss, cpfsStr);  // resto da linha
+
     Aeronave* a = g.procurarAeronave(codAero);
-    Piloto *p = g.procurarPiloto(codPiloto);
-    Piloto *ps = g.procurarPiloto(codCopiloto);
+    Piloto* p1 = g.procurarPiloto(codPiloto);
+    Piloto* p2 = g.procurarPiloto(codCopiloto);
 
-    Voo* voo = new Voo(
-        cod, origem, destino, 
-        dataHoraChegada, dataHoraSaida, 
-        distancia, // String
-        numEscalas, // Int
-        a, p, ps
-    );
+    if (!a || !p1 || !p2) return nullptr;
 
-    // Ler passageiros
-    string listaCPFs;
-    if (getline(ss, listaCPFs)) {
-        istringstream cpfStream(listaCPFs);
-        string cpf;
-        while (getline(cpfStream, cpf, '|')) {
-            Passageiro* passageiro = g.procurarPassageiro(cpf);
-            if (passageiro) voo->adicionarPassageiros(passageiro);
-        }
+    int nEscalas = stoi(nEscalasStr);
+    Voo* v = new Voo(cod, origem, destino, dataHoraChegada, dataHoraSaida, distancia, nEscalas, a, p1, p2);
+
+    // Processar passageiros
+    istringstream sp(cpfsStr);
+    string cpf;
+    while (getline(sp, cpf, '|')) {
+        Passageiro* p = g.procurarPassageiro(cpf);
+        if (p) v->adicionarPassageiros(p);
     }
-    return voo;
+
+    return v;
 }
 
 void Voo::exibirDados(){
-    cout << "\nOrigem: " << origem << "\nDestino: " << destino << "\nCódigo:" << codigo <<endl;
+    cout << "\nOrigem: " << origem << "\nDestino: " << destino << "\nCódigo do Voo:" << codigo <<endl;
     aeronave->exibirDados();  
     cout <<"\n\n";
 }

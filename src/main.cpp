@@ -3,7 +3,7 @@
 #include "gerenciador.h"
 
 int main(){
-    int opc;
+    int opc = 0;
     Piloto *auxPiloto, *auxPiloto2;
     Aeronave *auxAeronave;
     Gerenciador gerenciador;
@@ -13,7 +13,7 @@ int main(){
     float auxVel, auxHorasAutonomia;
 
     while(opc != 9){
-        cout << "\n===================================\n1- Cadastrar aereonave\n2- Cadastrar Piloto\n3- Cadastrar Passageiro\n4- Criar Voo\n5- Cadastrar passageiro em voo\n6- Listar Voos\n7- Listar passageiros de um voo\n8- Gerar relatórios e estatísticas\n9- Salvar dados e sair\n===================================\n\nEscolha uma opção seu gay: "<< endl;
+        cout << "\n===================================\n1- Cadastrar aereonave\n2- Cadastrar Piloto\n3- Cadastrar Passageiro\n4- Criar Voo\n5- Cadastrar passageiro em voo\n6- Listar Voos\n7- Listar passageiros de um voo\n8- Carregar os dados anteriores\n9- Salvar dados e sair\n===================================\n\nEscolha uma opção seu gay: "<< endl;
         cin >> opc;
         switch (opc){
         case 1:{    //cadastrar aeronave
@@ -67,7 +67,7 @@ int main(){
                 break;
             cout << "Digite o código da aeronave: ";                      //Tem que mudar para o código
             cin >> auxCod;
-            auxAeronave = gerenciador.procurarAeronave(auxNome);
+            auxAeronave = gerenciador.procurarAeronave(auxCod);
             if(!auxAeronave)
                 break;
             // Agora cria o voo (ponteiros válidos)
@@ -111,7 +111,13 @@ int main(){
             Voo *voo = gerenciador.procurarVoo(auxCod);
             if(!voo)//não achou
                 break;
+            //gerenciador.listarPassageiros();
             gerenciador.listarPassageirosDeUmVoo(voo);
+            break;
+        }
+        case 8:{
+            gerenciador.carregarDados();
+            cout << "Dados carregados!";
             break;
         }
         case 9:{

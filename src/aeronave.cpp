@@ -39,11 +39,5 @@ Aeronave* Aeronave::desserializar(const string& linha) {
 }
 
 void Aeronave::exibirDados(){
-    cout << "Codigo: " << codigo << "\nModelo: " << modelo << "\nCapacidade: " << capacidade << "\nVelocidade Media: " << velocidadeMedia << "\nHoras de Autonomia: " << horasDeAutonomia <<endl;
+    cout << "Código da aeronave: " << codigo << "\nModelo: " << modelo << "\nCapacidade: " << capacidade << "\nVelocidade Media: " << velocidadeMedia << "\nHoras de Autonomia: " << horasDeAutonomia <<endl;
 }
-
-
-/*
-Aeronave* Aeronave::registerAircraft(string cod, string model, int cap, float velMed, float hAut){
-     return new Aeronave(cod, model, cap, velMed, hAut);//cria um aeronave e retorna um ponteiro pra ela
-}*/

@@ -6,6 +6,7 @@
 #include "passageiro.h"
 #include "base.h"
 #include <vector>
+#include <map>
 using namespace std;
 
 class Voo;
@@ -15,6 +16,9 @@ class Gerenciador{
     vector<Passageiro*> passageirosCadastrados;
     vector<Aeronave*> aeronavesCadastradas;
     vector<Voo*> voosCadastrados;
+    map<string, Passageiro*> mapaPassageiros;
+    map<string, Aeronave*> mapaAeronaves;
+    map<string, Piloto*> mapaPilotos;
 public:
     bool cadastrarPiloto(Piloto *p);
     bool cadastrarAeronave(Aeronave *a);
