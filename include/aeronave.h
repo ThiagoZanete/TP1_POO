@@ -16,8 +16,8 @@ public:
     void exibirDados() override;
     //Aeronave* registerAircraft(string cod, string model, int cap, float velMed, float hAut);
     //getters
-    string getModelo() const { return modelo; }
-    string getCodigo() const { return codigo; }
+    string getcodigo() const override { return codigo; }
+    string getnome() const override { return modelo; } 
     int getCapacidade() const { return capacidade; }
     float getVelocidade() const { return velocidadeMedia; }
     float getHorasDeAutonomia() const { return horasDeAutonomia; }

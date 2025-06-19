@@ -6,8 +6,8 @@ using namespace std;
 
 class Piloto : public Pessoa{
     string breve;//brevê
-    string horasDeVoo;
     string matricula;
+    string horasDeVoo;
 public:
     Piloto(string nome, string breve, string matricula, string horasDeVoo);
     string serializar() override;

@@ -21,6 +21,9 @@ public:
     int calcularNescalas();
     void adicionarPassageiros(Passageiro *passageiro);
     void removerPassageiro(Passageiro *Passageiro);
+    void listarPassageirosVoo();
+    string serializar() override;
+    void exibirDados() override;
     
    // Getters
     Aeronave* getAeronave() const { return aeronave; }
@@ -28,7 +31,7 @@ public:
     Piloto* getCopiloto() const { return copiloto; }
     float getDuracaoEstimada() const { return duracaoEstimada; }
     int getNEscalas() const { return nEscalas; }
-    string getCodigo() const { return codigo; }
+    string getcodigo() const { return codigo; }
     string getDataHoraChegada() const { return dataHoraChegada; }
     string getDataHoraSaida() const { return dataHoraSaida; }
     string getDestino() const { return destino; }

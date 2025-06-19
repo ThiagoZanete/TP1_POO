@@ -9,7 +9,7 @@ protected:
 public:
     Pessoa(string nome) : nome(nome) {}
     
-    string getNome() const { return nome; };
+    string getnome() const override { return nome; };
     void setNome(string nome) {nome = nome; }; 
 };
 

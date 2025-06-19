@@ -10,6 +10,7 @@ Aeronave::Aeronave(string codigo, string modelo, int capacidade, float velocidad
     this->horasDeAutonomia = horasDeAutonomia;
 }
 string Aeronave::serializar(){
+    return "";
 }
 void Aeronave::exibirDados(){
     cout << "Codigo: " << codigo << "\nModelo: " << modelo << "\nCapacidade: " << capacidade << "\nVelocidade Media: " << velocidadeMedia << "\nHoras de Autonomia: " << horasDeAutonomia <<endl;

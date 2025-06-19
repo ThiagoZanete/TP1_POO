@@ -3,11 +3,16 @@
 #include <iostream>
 using namespace std;
 
-class Base{
+class Base {
 public:
-    virtual void exibirDados();
-    virtual string serializar();
-    virtual string getcodigo();
-    virtual string getnome();
+    virtual void exibirDados() = 0;
+    virtual string serializar() = 0;
+
+    virtual string getcodigo() const;
+    virtual string getnome() const;
+
+    virtual ~Base() = default;
 };
+
+
 #endif
