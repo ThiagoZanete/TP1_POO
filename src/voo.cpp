@@ -56,6 +56,33 @@ float Voo::calcularDuracao() {
     return duracaoBase + nEscalas; // 1h por escala
 }
 
+string Voo::calcularDataChegada() {
+    std::tm tm = {};
+    std::istringstream ss(dataHoraSaida);
+    //cerr << "DEBUG: dataHoraSaida recebida -> [" << dataHoraSaida << "]" << endl;
+    ss >> std::get_time(&tm, "%d/%m/%Y %H:%M");
+
+    if (ss.fail()) {
+        cerr << "Erro ao converter dataHoraSaida: " << dataHoraSaida << endl;
+        return "Data inválida";
+    }
+
+    // Transforma para time_t e adiciona a duração
+    time_t tempoSaida = mktime(&tm);
+    float duracaoHoras = calcularDuracao();
+    tempoSaida += static_cast<int>(duracaoHoras * 3600);
+
+    // Converte de volta para struct tm
+    std::tm* chegadaTm = localtime(&tempoSaida);
+
+    // Formata como string no mesmo estilo
+    std::ostringstream saida;
+    saida << std::put_time(chegadaTm, "%d/%m/%Y %H:%M");
+
+    return saida.str();
+}
+
+
 
 void Voo::listarPassageirosVoo(){
     for(const auto &p : passageiros){
@@ -124,7 +151,7 @@ Voo* Voo::desserializar(const string& linha, Gerenciador& g) {
 }
 
 void Voo::exibirDados(){
-    cout << "\nOrigem: " << origem << "\nDestino: " << destino << "\nCódigo do Voo:" << codigo <<endl;
+    cout << "\nOrigem: " << origem << "\nDestino: " << destino << "\nCódigo do Voo: " << codigo << "\nDataHora saída: " << dataHoraSaida << "DataHora chegada: " << dataHoraChegada <<endl;
     aeronave->exibirDados();  
     cout <<"\n\n";
 }

@@ -6,6 +6,8 @@
 #include "gerenciador.h"
 #include <vector>
 #include <iostream>
+#include <ctime>
+#include <iomanip>
 using namespace std;
 
 class Gerenciador;
@@ -22,6 +24,7 @@ public:
     Voo(string codigo, string origem, string destino, string datasaida, string datachegada, string distancia, int nEscalas, Aeronave *aeronave, Piloto *piloto, Piloto *copiloto);
     float calcularDuracao();
     int calcularNescalas();
+    string calcularDataChegada();
     void adicionarPassageiros(Passageiro *passageiro);
     void removerPassageiro(Passageiro *Passageiro);
     void listarPassageirosVoo();
