@@ -1,6 +1,6 @@
-#include <vector>
 #include <fstream>
 #include <sstream>
+#include <algorithm> // para sort
 #include "gerenciador.h"
 using namespace std;
 
@@ -75,7 +75,7 @@ Voo* Gerenciador::procurarVoo(string codigo){
     return nullptr;
 }
 
-Passageiro* Gerenciador::procurarPassageiro(string cpf){
+Passageiro* Gerenciador::procurarPassageiro(string cpf) const{
     auto it = mapaPassageiros.find(cpf);
     if (it != mapaPassageiros.end())
         return it->second;
@@ -110,6 +110,104 @@ void Gerenciador::listarPassageirosDeUmVoo(Voo *v) const{
     v->listarPassageirosVoo();
     cout << "====================================="<<endl;
 }
+
+int Gerenciador::contarVoos() const{
+    return voosCadastrados.size();
+}
+
+int Gerenciador::mediaPassageirosVoo() const{
+    int totalGeralPas = 0;
+    for(const auto & p : voosCadastrados){
+        totalGeralPas += p->getPassageiros().size();//conta os passageiros de cada voo
+    }
+    if(contarVoos()<=0) return 0;
+    return totalGeralPas / contarVoos();
+}
+
+
+vector<pair<string, int>> Gerenciador::aeronavesMaisUsadas() const {//retorna um vector de pares de aeronave (código, quant uso)
+    map<string, int> contagem;
+
+    for (const auto& v : voosCadastrados) {
+        string cod = v->getAeronave()->getcodigo();
+        contagem[cod]++;
+    }
+
+    // Transforma o map em vector para ordenar
+    vector<pair<string, int>> vetorContagem(contagem.begin(), contagem.end());
+
+    // Ordena decrescente pela quantidade
+    sort(vetorContagem.begin(), vetorContagem.end(),
+              [](auto& a, auto& b) { return a.second > b.second; });
+
+    return vetorContagem;
+}
+
+map<Passageiro*, int> Gerenciador::passageirosFrequentes() const {
+    map<string, int> contagem;  // CPF → qtd voos
+
+    for (const auto& v : voosCadastrados) {
+        for (Passageiro* p : v->getPassageiros()) {
+            contagem[p->getCpf()]++;//passa para o map o cpf e o ++ é a contagem de vezes que esse passageiro aparece
+        }
+    }
+
+    map<Passageiro*, int> resultados;
+    for (auto& par : contagem) {
+        if (par.second > 1) {
+            Passageiro* p = procurarPassageiro(par.first);
+            if (p) resultados[p] = par.second;
+        }
+    }
+
+    return resultados;
+}
+
+vector<Voo*> Gerenciador::voosAltaLotacao() const {
+    std::vector<Voo*> resultado;
+
+    for (auto& v : voosCadastrados) {
+        int capacidade = v->getAeronave()->getCapacidade();
+        int ocupacao = v->getPassageiros().size();
+        if (capacidade > 0 && ocupacao >= capacidade * 0.9) {
+            resultado.push_back(v);
+        }
+    }
+    return resultado;
+}
+
+map<string, float> Gerenciador::distanciaTotalPorAeronave() const {
+    std::map<std::string, float> distancias;
+
+    for (auto& v : voosCadastrados) {
+        std::string cod = v->getAeronave()->getcodigo();
+        float dist = std::stof(v->getDistancia());  // sua distância é string, converta
+        distancias[cod] += dist;
+    }
+    return distancias;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 void Gerenciador::carregarDados() {
     // 1. Carregar pessoas PRIMEIRO (pilotos e passageiros)
