@@ -18,9 +18,10 @@ int main(){
         switch (opc){
         case 1:{    //cadastrar aeronave
             cout << "Digite o código da aeronave: "; 
-            cin >> auxCod;
+            cin.ignore();
+            getline(cin,auxCod);
             cout << "Digite o modelo da aeronave: ";
-            cin >> auxNome; 
+            getline(cin,auxNome); 
             cout << "Digite a capacidade da aeronave: ";
             cin >> auxCap;
             cout << "Digite a velocidade média da aeronave: ";
@@ -34,11 +35,12 @@ int main(){
         }
         case 2:{    //cadastrar piloto
             cout << "Digite o Nome do piloto: ";
-            cin >> auxNome;
+            cin.ignore();
+            getline(cin,auxNome);
             cout << "Digite o brevê do piloto: ";
-            cin >> auxBreve;
+            getline(cin,auxBreve);
             cout << "Digite a matrícula do piloto: ";
-            cin >> auxMatricula;
+            getline(cin,auxMatricula);
             cout << "Digite as horas de voo do piloto: ";
             cin >> auxHorasdeVoo;
             Piloto *novoPiloto = new Piloto(auxNome, auxBreve, auxMatricula, auxHorasdeVoo);
@@ -47,38 +49,39 @@ int main(){
         }
         case 3:{    //cadastrar passageiro
             cout << "Digite o Nome do passageiro: ";
-            cin >> auxNome;
+            cin.ignore();
+            getline(cin,auxNome);
             cout << "Digite o bilhete do passageiro: ";
-            cin >> auxBilhete;
+            getline(cin,auxBilhete);
             cout << "Digite o cpf do passageiro: ";
-            cin >> auxCpf;
+            getline(cin,auxCpf);
             Passageiro *novoPassageiro = new Passageiro(auxNome, auxBilhete, auxCpf);
             gerenciador.cadastrarPassageiro(novoPassageiro);
             break;
         }
         case 4:{    //criar Voo
             cout << "Digite o brevê do piloto: ";
-            cin >> auxBreve;
-            cout << "Digite o brevê do copiloto: ";          //Tem que mudar para o brevê
-            cin >> auxBreve2;
+            cin.ignore();
+            getline(cin,auxBreve);
+            cout << "Digite o brevê do copiloto: ";         //Tem que mudar para o brevê
+            getline(cin,auxBreve2);
             auxPiloto = gerenciador.procurarPiloto(auxBreve);
             auxPiloto2 = gerenciador.procurarPiloto(auxBreve2);
             if(!auxPiloto || !auxPiloto2)
                 break;
             cout << "Digite o código da aeronave: ";                      //Tem que mudar para o código
-            cin >> auxCod;
+            getline(cin,auxCod);
             auxAeronave = gerenciador.procurarAeronave(auxCod);
             if(!auxAeronave)
                 break;
             // Agora cria o voo (ponteiros válidos)
             cout << "Digite o código do voo: ";
-            cin >> auxCod;
+            getline(cin,auxCod);
             cout << "Digite a origem do voo: ";
-            cin >> auxOrigem;
+            getline(cin,auxOrigem);
             cout << "Digite o destino do voo: ";
-            cin >> auxDestino;
+            getline(cin,auxDestino);
             cout << "Digite a data e hora de saída do voo no formato dd/mm/aaaa HH:MM ";
-            cin.ignore();
             getline(cin, auxDataSaida);
             cout << "Digite a distância do voo: ";
             cin >> auxDistancia;
@@ -92,13 +95,14 @@ int main(){
             break;
         }
         case 5:{//cadastrar passageiro em voo
-            cout << "Digite o codigo do voo em que deseja cadastrar um passageiro: ";       
-            cin >> auxCod; 
+            cout << "Digite o codigo do voo em que deseja cadastrar um passageiro: "; 
+            cin.ignore();      
+            getline(cin,auxCod); 
             Voo *voo = gerenciador.procurarVoo(auxCod);
             if(!voo)//não achou
                 break;
             cout << "Digite o cpf do passageiro que deseja incluir nesse voo: ";       //Tem que mudar para cpf
-            cin >> auxCpf;
+            getline(cin,auxCpf);
             Passageiro *passageiro= gerenciador.procurarPassageiro(auxCpf);
             if(!passageiro)//não achou
                 break;
@@ -112,7 +116,8 @@ int main(){
         }
         case 7:{//listar passageiros de voo
             cout << "Digite o código do voo que deseja listar os passageiros: ";
-            cin >> auxCod;
+            cin.ignore();
+            getline(cin,auxCod);
             Voo *voo = gerenciador.procurarVoo(auxCod);
             if(!voo)//não achou
                 break;

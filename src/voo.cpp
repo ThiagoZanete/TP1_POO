@@ -151,7 +151,7 @@ Voo* Voo::desserializar(const string& linha, Gerenciador& g) {
 }
 
 void Voo::exibirDados(){
-    cout << "\nOrigem: " << origem << "\nDestino: " << destino << "\nCódigo do Voo: " << codigo << "\nDataHora saída: " << dataHoraSaida << "DataHora chegada: " << dataHoraChegada <<endl;
+    cout << "\nOrigem: " << origem << "\nDestino: " << destino << "\nCódigo do Voo: " << codigo << "\nDataHora saída: " << dataHoraSaida << "\nDataHora chegada: " << dataHoraChegada <<endl;
     aeronave->exibirDados();  
     cout <<"\n\n";
 }
