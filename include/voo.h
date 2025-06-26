@@ -3,26 +3,33 @@
 #include "passageiro.h"
 #include "piloto.h"
 #include "aeronave.h"
+#include "gerenciador.h"
 #include <vector>
 #include <iostream>
+#include <ctime>
+#include <iomanip>
 using namespace std;
 
+class Gerenciador;
+
 class Voo : public Base{
+    string codigo, origem, destino, dataHoraChegada, dataHoraSaida, distancia;
+    int nEscalas;
+    float duracaoEstimada;
     Aeronave *aeronave;
     Piloto *piloto, *copiloto;
-    float duracaoEstimada;
-    int nEscalas;
-    string codigo, dataHoraChegada, dataHoraSaida, destino, distancia, origem;
     vector<Passageiro *> passageiros;
 
 public:
-    Voo(string codigo, string origem, string destino, Aeronave *aeronave, Piloto *piloto, Piloto *copiloto);
+    Voo(string codigo, string origem, string destino, string datasaida, string datachegada, string distancia, int nEscalas, Aeronave *aeronave, Piloto *piloto, Piloto *copiloto);
     float calcularDuracao();
     int calcularNescalas();
+    string calcularDataChegada();
     void adicionarPassageiros(Passageiro *passageiro);
     void removerPassageiro(Passageiro *Passageiro);
     void listarPassageirosVoo();
     string serializar() override;
+    static Voo* desserializar(const string& linha, Gerenciador& g);
     void exibirDados() override;
     
    // Getters

@@ -1,0 +1,19 @@
+# Binários e arquivos temporários
+*.bin
+*.o
+*.exe
+*.out
+*.log
+
+# Diretórios de build
+/build/
+/bin/
+/csv/
+
+# Ignorar backups do editor
+*~
+*.swp
+*.tmp
+
+# VSCode
+.vscode/
