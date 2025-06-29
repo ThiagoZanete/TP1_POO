@@ -35,13 +35,16 @@ void Voo :: removerPassageiro(Passageiro *p){
 
 int Voo::calcularNescalas() {
     float distanciaKm = stof(distancia);
-    float autonomiaKm = aeronave->getHorasDeAutonomia();
+    float autonomiaKm = aeronave->getVelocidade() * aeronave->getHorasDeAutonomia();
 
     if (autonomiaKm <= 0) return 0;
 
-    int escalas = distanciaKm / autonomiaKm;
-    if (distanciaKm > autonomiaKm && distanciaKm > escalas * autonomiaKm)
-        escalas++; // uma escala extra se houver sobra
+    int escalas = static_cast<int>(distanciaKm / autonomiaKm);
+    if (distanciaKm > autonomiaKm * escalas)
+        escalas++; // escala extra se sobrar distância
+
+    if (escalas > 0) escalas--; // a última não é escala, é o destino
+
     return escalas;
 }
 
