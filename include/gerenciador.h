@@ -20,6 +20,8 @@ class Gerenciador{
     map<string, Aeronave*> mapaAeronaves;
     map<string, Piloto*> mapaPilotos;
 public:
+    ~Gerenciador();
+
     bool cadastrarPiloto(Piloto *p);
     bool cadastrarAeronave(Aeronave *a);
     bool cadastrarPassageiro(Passageiro *ps);

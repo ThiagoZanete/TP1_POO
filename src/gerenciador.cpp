@@ -4,6 +4,13 @@
 #include "gerenciador.h"
 using namespace std;
 
+Gerenciador::~Gerenciador() {
+    for (auto* p : pilotosCadastrados) delete p;
+    for (auto* ps : passageirosCadastrados) delete ps;
+    for (auto* a : aeronavesCadastradas) delete a;
+    for (auto* v : voosCadastrados) delete v;
+}
+
 bool Gerenciador::cadastrarPiloto(Piloto *p){
     if(p != nullptr){
         pilotosCadastrados.push_back(p);
@@ -53,7 +60,7 @@ Piloto* Gerenciador::procurarPiloto(string breve){
     if (it != mapaPilotos.end())
         return it->second;
 
-    cout << "Piloto não cadastrado ainda" << endl;
+    //cout << "Piloto não cadastrado ainda" << endl;
     return nullptr;
 }
 
@@ -62,7 +69,7 @@ Aeronave* Gerenciador::procurarAeronave(string cod){
     if (it != mapaAeronaves.end())
         return it->second;
 
-    cout << "Aeronave não cadastrada ainda" << endl;
+    //cout << "Aeronave não cadastrada ainda" << endl;
     return nullptr;
 }
 
@@ -71,7 +78,7 @@ Voo* Gerenciador::procurarVoo(string codigo){
         if(v->getcodigo() == codigo)
             return v;
     }
-    cout << "Voo não cadastrado ainda"<<endl;
+    //cout << "Voo não cadastrado ainda"<<endl;
     return nullptr;
 }
 
@@ -80,7 +87,7 @@ Passageiro* Gerenciador::procurarPassageiro(string cpf) const{
     if (it != mapaPassageiros.end())
         return it->second;
 
-    cout << "Passageiro não cadastrado ainda" << endl;
+    //cout << "Passageiro não cadastrado ainda" << endl;
     return nullptr;
 }
 
