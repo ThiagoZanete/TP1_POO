@@ -10,9 +10,9 @@ class Passageiro : public Pessoa{
 public:
     Passageiro(string nome, string bilhete, string cpf);
     virtual ~Passageiro() {};
-    string serializar() override;
+    string serializar();
     static Passageiro* desserializar(const string& linha);
-    void exibirDados() override;
+    void exibirDados();
 
     //getters
     //string getNome() const { return nome; } essa parte foi herdada de Pessoa

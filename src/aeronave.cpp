@@ -4,7 +4,7 @@
 #include <vector>
 using namespace std;
 
-Aeronave::Aeronave(string codigo, string modelo, int capacidade, float velocidadeMedia, float horasDeAutonomia) : Base(){
+Aeronave::Aeronave(string codigo, string modelo, int capacidade, float velocidadeMedia, float horasDeAutonomia){
     this->codigo = codigo;
     this->modelo = modelo;
     this->capacidade = capacidade;

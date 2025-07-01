@@ -4,7 +4,6 @@
 #include "voo.h"
 #include "piloto.h"
 #include "passageiro.h"
-#include "base.h"
 #include <vector>
 #include <map>
 using namespace std;

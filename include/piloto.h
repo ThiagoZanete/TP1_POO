@@ -10,8 +10,8 @@ class Piloto : public Pessoa{
     string horasDeVoo;
 public:
     Piloto(string nome, string breve, string matricula, string horasDeVoo);
-    string serializar() override;
-    void exibirDados() override;
+    string serializar();
+    void exibirDados();
     static Piloto* desserializar(const string& linha);
      
     //getters

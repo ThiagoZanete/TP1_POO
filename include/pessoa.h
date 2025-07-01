@@ -1,15 +1,14 @@
 #ifndef PESSOA_H
 #define PESSOA_H
 #include <iostream>
-#include "base.h"
 using namespace std;
-class Pessoa : public Base{
+class Pessoa{
 protected:
     string nome;
 public:
     Pessoa(string nome) : nome(nome) {}
     
-    string getnome() const override { return nome; };
+    string getnome() const { return nome; };
     void setNome(string nome) {nome = nome; }; 
 };
 

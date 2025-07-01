@@ -12,7 +12,7 @@ using namespace std;
 
 class Gerenciador;
 
-class Voo : public Base{
+class Voo{
     string codigo, origem, destino, dataHoraChegada, dataHoraSaida, distancia;
     int nEscalas;
     float duracaoEstimada;
@@ -28,9 +28,9 @@ public:
     void adicionarPassageiros(Passageiro *passageiro);
     void removerPassageiro(Passageiro *Passageiro);
     void listarPassageirosVoo();
-    string serializar() override;
+    string serializar();
     static Voo* desserializar(const string& linha, Gerenciador& g);
-    void exibirDados() override;
+    void exibirDados();
     
    // Getters
     Aeronave* getAeronave() const { return aeronave; }

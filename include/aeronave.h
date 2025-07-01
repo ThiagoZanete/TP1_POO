@@ -1,10 +1,9 @@
 #ifndef AERONAVE_H
 #define AERONAVE_H
 #include <iostream>
-#include "base.h"
 using namespace std;
 
-class Aeronave : public Base{
+class Aeronave{
     string codigo;
     string modelo;
     int capacidade;
@@ -13,12 +12,12 @@ class Aeronave : public Base{
 
 public:
     Aeronave(string codigo ="", string modelo="", int capacidade=0, float velocidadeMedia=0.0, float horasDeAutonomia=0.0);
-    string serializar() override;//indica que esta sobrescerevndo um método da classe base
+    string serializar();//indica que esta sobrescerevndo um método da classe base
     static Aeronave* desserializar(const string& linha);
-    void exibirDados() override;
+    void exibirDados();
     //getters
-    string getcodigo() const override { return codigo; }
-    string getnome() const override { return modelo; } 
+    string getcodigo() const { return codigo; }
+    string getnome() const { return modelo; }
     int getCapacidade() const { return capacidade; }
     float getVelocidade() const { return velocidadeMedia; }
     float getHorasDeAutonomia() const { return horasDeAutonomia; }
