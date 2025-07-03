@@ -15,12 +15,13 @@ int main(){
     int auxCap;
     float auxVel, auxHorasAutonomia;
 
-    while(opc != 9){
+    gerenciador.carregarDados();//carrega os dados salvos 
+    while(opc != 8){
         cout << "\n===================================\n"
-             << "1- Cadastrar aereonave\n2- Cadastrar Piloto\n3- Cadastrar Passageiro\n"
-             << "4- Criar Voo\n5- Cadastrar passageiro em voo\n6- Listar Voos\n"
-             << "7- Listar passageiros de um voo\n8- Carregar os dados anteriores\n"
-             << "9- Salvar dados e sair\n10- Gerar Relatórios estatísticos\n"
+             << "1- Cadastrar aeronave\n2- Cadastrar piloto\n3- Cadastrar passageiro\n"
+             << "4- Criar voo\n5- Cadastrar passageiro em voo\n6- Listar voos\n"
+             << "7- Listar passageiros de um voo\n"
+             << "8- Gerar relatórios estatísticos\n9- Salvar dados e sair\n"
              << "===================================\n\nEscolha uma opção: ";        
         
         cin >> opc;
@@ -221,18 +222,14 @@ int main(){
             break;
         }
         case 8:{
-            gerenciador.carregarDados();
-            cout << "Dados carregados!";
+            relatoriosEstatisticos(gerenciador);
+            opc = 0;
             break;
         }
         case 9:{
             gerenciador.salvarDados();
             cout << "Salvou os dados e saiu!\n";
-            break;
-        }
-        case 10:{//gerar relatórios e estatísticas
-            relatoriosEstatisticos(gerenciador);
-            break;
+            break;   
         }
         default:
             cout << "Caso Default"<<endl;
@@ -253,7 +250,7 @@ void relatoriosEstatisticos(const Gerenciador& gerenciador) {
         cout << "4 - Passageiros mais frequentes\n";
         cout << "5 - Voos com alta lotação (>=90% capacidade)\n";
         cout << "6 - Distância percorrida por cada aeronave\n";
-        cout << "7 - Voltar ao menu principal\n";
+        cout << "7 - Voltar ao menu principal\n\n";
         cout << "Escolha uma opção: ";
         cin >> opc;
         cin.ignore();  // limpa o '\n' do buffer
