@@ -79,7 +79,7 @@ int main(){
             Aeronave *novaAeronave = new Aeronave(auxCod, auxNome, auxCap, auxVel, auxHorasAutonomia);
             gerenciador.cadastrarAeronave(novaAeronave);
             cout << "\nAeronave cadastrada com sucesso!\n\n";
-            gerenciador.listarAeronaves(); // lista as aeronaves cadastradas
+            //gerenciador.listarAeronaves(); // lista as aeronaves cadastradas
             break;
         }
 
@@ -176,10 +176,23 @@ int main(){
             if (auxOrigem.empty()) { cout << "A hora/data do voo não pode ser vazia.\n"; break; }
 
             cout << "Digite a distância do voo: ";
-            cin >> auxDistancia;
-            if (cin.fail()) {
-                cin.clear(); cin.ignore(numeric_limits<streamsize>::max(), '\n');
-                cout << "Distância inválida.\n"; break;
+            cin.ignore();
+            getline(cin, auxDistancia);
+            bool valido = true;
+            if (auxDistancia.empty()) {
+                valido = false;
+            } else {
+                for (char c : auxDistancia) {
+                    if (!isdigit(c)) {
+                        valido = false;
+                        break;
+                    }
+                }
+            }
+
+            if (!valido) {
+                cout << "Distância inválida. Deve ser um número inteiro positivo.\n";
+                break;
             }
 
             // Cria voo e preenche campos derivados

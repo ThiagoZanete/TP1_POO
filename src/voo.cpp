@@ -19,10 +19,7 @@ Voo::Voo(string codigo, string origem, string destino,string datachegada, string
 void Voo :: adicionarPassageiros(Passageiro *p){
     if(passageiros.size() < (unsigned)aeronave->getCapacidade()){  // verifica lotação
         passageiros.push_back(p);
-        cout << "Adicionou: "<< p->getnome() << endl;
     }
-    else
-        cout<<"O voo de " << origem << " para " << destino << " está cheio."<<endl;
 }
 
 // Remove um passageiro do vetor e libera a memória
