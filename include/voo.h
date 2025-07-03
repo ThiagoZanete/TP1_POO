@@ -1,38 +1,45 @@
 #ifndef VOO_H
 #define VOO_H
-#include "passageiro.h"
-#include "piloto.h"
-#include "aeronave.h"
-#include "gerenciador.h"
-#include <vector>
-#include <iostream>
-#include <ctime>
-#include <iomanip>
-using namespace std;
 
-class Gerenciador;
+#include "passageiro.h"    
+#include "piloto.h"        
+#include "aeronave.h"       
+#include "gerenciador.h"   
 
-class Voo{
-    string codigo, origem, destino, dataHoraChegada, dataHoraSaida, distancia;
-    int nEscalas;
-    float duracaoEstimada;
-    Aeronave *aeronave;
-    Piloto *piloto, *copiloto;
-    vector<Passageiro *> passageiros;
+#include <vector>          
+#include <iostream>         
+#include <ctime>            
+#include <iomanip>          
+
+using namespace std;        
+
+class Gerenciador; // Declaração antecipada da classe Gerenciador (para uso em ponteiros)
+
+class Voo { // Declaração da classe Voo
+    // Atributos privados do voo
+    string codigo, origem, destino, dataHoraChegada, dataHoraSaida, distancia; // Informações básicas do voo
+    int nEscalas;                        // Número de escalas
+    float duracaoEstimada;              // Duração estimada do voo
+    Aeronave *aeronave;                 // Ponteiro para a aeronave usada
+    Piloto *piloto, *copiloto;          // Ponteiros para piloto e copiloto
+    vector<Passageiro *> passageiros;   // Lista de passageiros do voo
 
 public:
+    // Construtor da classe
     Voo(string codigo, string origem, string destino, string datasaida, string datachegada, string distancia, int nEscalas, Aeronave *aeronave, Piloto *piloto, Piloto *copiloto);
-    float calcularDuracao();
-    int calcularNescalas();
-    string calcularDataChegada();
-    void adicionarPassageiros(Passageiro *passageiro);
-    void removerPassageiro(Passageiro *Passageiro);
-    void listarPassageirosVoo();
-    string serializar();
-    static Voo* desserializar(const string& linha, Gerenciador& g);
-    void exibirDados();
-    
-   // Getters
+
+    // Métodos principais
+    float calcularDuracao();                            // Calcula a duração do voo com base nos horários
+    int calcularNescalas();                             // Calcula o número de escalas (caso precise)
+    string calcularDataChegada();                       // Estima a data de chegada com base na saída e duração
+    void adicionarPassageiros(Passageiro *passageiro);  // Adiciona um passageiro ao vetor de passageiros
+    void removerPassageiro(Passageiro *Passageiro);     // Remove um passageiro do vetor
+    void listarPassageirosVoo();                        // Lista todos os passageiros do voo
+    string serializar();                                // Converte os dados do voo para uma string (ex: para salvar em arquivo)
+    static Voo* desserializar(const string& linha, Gerenciador& g); // Constrói um voo a partir de uma linha lida do arquivo CSV
+    void exibirDados();                                 // Exibe os dados principais do voo no console
+
+    // Getters 
     Aeronave* getAeronave() const { return aeronave; }
     Piloto* getPiloto() const { return piloto; }
     Piloto* getCopiloto() const { return copiloto; }
@@ -46,7 +53,7 @@ public:
     string getOrigem() const { return origem; }
     vector<Passageiro*> getPassageiros() const { return passageiros; }
 
-    // Setters
+    // Setters 
     void setAeronave(Aeronave* a) { aeronave = a; }
     void setPiloto(Piloto* p) { piloto = p; }
     void setCopiloto(Piloto* cp) { copiloto = cp; }
@@ -62,4 +69,4 @@ public:
 
 };
 
-#endif
+#endif 
